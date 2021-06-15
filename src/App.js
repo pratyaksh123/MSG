@@ -27,6 +27,7 @@ function App() {
 				);
 			});
 		return () => {unsubscribe()};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// useState{like a variable}
