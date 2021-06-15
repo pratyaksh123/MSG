@@ -14,13 +14,14 @@ function App() {
 	const [username, setUsername] = useState("");
 
 	useEffect(() => {
-		db.collection("messages")
+		const unsubscribe = db.collection("messages")
 			.orderBy("timestamp", "desc")
 			.onSnapshot((snapshot) => {
 				setMessages(
 					snapshot.docs.map((doc) => ({ id: doc.id, message: doc.data() }))
 				);
 			});
+		return () = {unsubscribe()};
 	}, []);
 
 	// useState{like a variable}
@@ -38,7 +39,6 @@ function App() {
 			username: username,
 			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 		});
-		setMessages([...messages, { username: username, message: input }]);
 		setInput("");
 	};
 	return (
