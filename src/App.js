@@ -21,7 +21,7 @@ function App() {
 					snapshot.docs.map((doc) => ({ id: doc.id, message: doc.data() }))
 				);
 			});
-		return () = {unsubscribe()};
+		return () => {unsubscribe()};
 	}, []);
 
 	// useState{like a variable}
