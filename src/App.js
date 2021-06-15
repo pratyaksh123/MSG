@@ -7,16 +7,21 @@ import firebase from "firebase";
 import FlipMove from "react-flip-move";
 import SendIcon from "@material-ui/icons/Send";
 import { IconButton } from "@material-ui/core";
+import useSound from 'use-sound';
+import FB from './Sound/notify.mp3';
 
 function App() {
 	const [input, setInput] = useState("");
 	const [messages, setMessages] = useState([]);
 	const [username, setUsername] = useState("");
-
+	const [play] = useSound(FB);
 	useEffect(() => {
 		const unsubscribe = db.collection("messages")
 			.orderBy("timestamp", "desc")
 			.onSnapshot((snapshot) => {
+				if (!document.hasFocus()){
+					play();
+				}
 				setMessages(
 					snapshot.docs.map((doc) => ({ id: doc.id, message: doc.data() }))
 				);
