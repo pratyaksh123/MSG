@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import "./App.css";
 import Message from "./Message";
 import { FormControl, Input } from "@material-ui/core";
@@ -12,7 +12,8 @@ function App() {
 	const [input, setInput] = useState("");
 	const [messages, setMessages] = useState([]);
 	const [username, setUsername] = useState("");
-
+	const inputEl = useRef(null);
+	
 	useEffect(() => {
 		const unsubscribe = db.collection("messages")
 			.orderBy("timestamp", "desc")
@@ -49,6 +50,7 @@ function App() {
 			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 		});
 		setInput("");
+		inputEl.current.focus();
 	};
 	return (
 		<div className="App">
@@ -62,6 +64,7 @@ function App() {
 			<form className="app__form">
 				<FormControl className="app__formControl">
 					<Input
+						ref={inputEl}
 						className="app__input"
 						placeholder="Enter a message..."
 						value={input}
